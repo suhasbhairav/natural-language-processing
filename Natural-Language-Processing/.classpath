@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="C:/Users/Suhas/Desktop/MachineLearning/NLP/stanford-corenlp-full-2016-10-31/slf4j-simple.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Suhas/Desktop/MachineLearning/NLP/stanford-corenlp-full-2016-10-31/stanford-corenlp-3.7.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Suhas/Desktop/MachineLearning/NLP/stanford-corenlp-full-2016-10-31/xom.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Suhas/Desktop/MachineLearning/NLP/stanford-corenlp-models-current.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

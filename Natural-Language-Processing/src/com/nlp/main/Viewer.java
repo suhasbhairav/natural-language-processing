@@ -8,7 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -18,12 +22,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.nlp.stanfordnlp.Annotate;
+
 public class Viewer {
 	JLabel labelFile;
 	
 	JTextField txtInput;
 	JTextArea txtResults;
-	JButton btnLoad;
 	JButton btnBrowse;
 	
 	JFrame mainFrame;
@@ -56,6 +61,8 @@ public class Viewer {
 		txtInput.setColumns(20);
 		txtInput.setSize(new Dimension(200,40));
 		
+		txtResults = new JTextArea();
+		txtResults.setSize(new Dimension(300, 300));
 		
 		btnBrowse = new JButton("Browse");
 		btnBrowse.setSize(new Dimension(40,40));
@@ -68,7 +75,22 @@ public class Viewer {
 					int returnValue = fileChooser.showOpenDialog(mainFrame);
 					if(returnValue == JFileChooser.APPROVE_OPTION){
 						File selectedFile = fileChooser.getSelectedFile();
-						
+						String content = "";
+						try {
+							BufferedReader br = new BufferedReader(
+									new FileReader(selectedFile));
+							String line = null;
+							while((line = br.readLine())!=null){
+								content = content + line + "\n";
+							}
+							txtResults.setText(content);
+							
+							Annotate ann = new Annotate();
+							ann.generateAnnotators(content);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					}
 				}
 			
@@ -76,19 +98,15 @@ public class Viewer {
 		});
 		
 		
-		btnLoad = new JButton("Load");
-		btnLoad.setSize(new Dimension(40, 40));
-		
+				
 		txtPanel.add(labelFile);
 		txtPanel.add(txtInput);
 		txtPanel.add(btnBrowse);
-		txtPanel.add(btnLoad);
 		txtPanel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		
 		mainFrame.add(txtPanel, BorderLayout.NORTH);
 		
-		txtResults = new JTextArea();
-		txtResults.setSize(new Dimension(300, 300));
+		
 		mainFrame.add(txtResults, BorderLayout.CENTER);
 		
 		mainFrame.pack();
